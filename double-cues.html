@@ -1,0 +1,29 @@
+<style>
+  video {
+    width: 960px;
+    height: 400px;
+  };
+</style>
+<p>The video below will autoplay. For the first 5 seconds, you'll be able to see the cues correctly positioned.</p>
+<p>Then, it'll modify all available cue's <code>line</code> property to be <code>0</code>.</p>
+<p>It'll then seek back to the beginning, after which, you'll be able to see two cues.</p>
+<p>One will be at the top of the video, and one will be at the bottom.</p>
+<p>This duplication will occur whenever <em>any</em> property is changed on the cue when you seek back and replay the time that the cue was active for.</p>
+<p>Seems to only occur with in-manifest captions and not with captions added with a <code>&lt;track&gt;</code> element.</p>
+<video controls crossorigin muted autoplay playsinline>
+  <source src="https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8" type="application/x-mpegurl">
+</video>
+<script>
+  var vid = document.querySelector('video');
+
+  vid.addEventListener('timeupdate', function tuhandler() {
+    if (vid.currentTime < 5) return;
+
+    var track = Array.from(vid.textTracks).filter(t=>t.mode ==='showing')[0];
+
+    Array.from(track.cues).forEach(cue => cue.line = 0)
+
+    vid.currentTime = 0;
+    vid.removeEventListener('timeupdate', tuhandler);
+  });
+</script>
