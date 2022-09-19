@@ -1,0 +1,15 @@
+<style>
+  video {
+    width: 960px;
+    height: 400px;
+  };
+
+  video::-webkit-media-text-track-display {
+    transform: translateY(-5em);
+  }
+</style>
+<video controls preload="none" poster="./oceans.png" crossorigin>
+  <source src="./oceans.mp4" type="video/mp4">
+  <track src="./oceans.vtt" label="oceans" kind="captions" default>
+  <track src="./oceans-single-line.vtt" label="single cue per line" kind="captions">
+</video>
